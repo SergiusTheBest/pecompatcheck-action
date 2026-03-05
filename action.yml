@@ -1,0 +1,55 @@
+name: PECompatCheck action
+description: Check PE binary compatibility against a target Windows version using PECompatCheck tool.
+
+branding:
+  icon: shield
+  color: blue
+
+inputs:
+  binary:
+    description: |
+      One or more paths to PE binaries to check (DLL, EXE, SYS), one path per line.
+    required: true
+  windows-version:
+    description: Windows version to check against (e.g. vista-sp2). Must match a directory name under tool/PECompatCheck/baseline/.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Install readpe (Linux)
+      if: runner.os == 'Linux'
+      shell: bash
+      run: sudo apt-get install -y readpe
+
+    - name: Install readpe (macOS)
+      if: runner.os == 'macOS'
+      shell: bash
+      run: brew install pev
+
+    - name: Run PECompatCheck (Linux/macOS)
+      if: runner.os != 'Windows'
+      shell: bash
+      run: |
+        BASELINE="${{ github.action_path }}/tool/PECompatCheck/baseline/${{ inputs.windows-version }}"
+        while IFS= read -r binary; do
+          [[ -z "$binary" ]] && continue
+          echo "::group::$binary"
+          bash "${{ github.action_path }}/tool/PECompatCheck/resolve-pe-imports.sh" "$binary" "$BASELINE"
+          echo "::endgroup::"
+        done <<'EOF'
+        ${{ inputs.binary }}
+        EOF
+
+    - name: Run PECompatCheck (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        $baseline = "${{ github.action_path }}/tool/PECompatCheck/baseline/${{ inputs.windows-version }}"
+        $binaries = '${{ inputs.binary }}' -split '\r?\n' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' }
+        foreach ($binary in $binaries) {
+          Write-Host "::group::$binary"
+          & "${{ github.action_path }}/tool/PECompatCheck/resolve-pe-imports.ps1" $binary $baseline
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "::endgroup::"
+        }
