@@ -60,7 +60,7 @@ jobs:
           exit 1
 
   test-positive:
-    name: Positive (${{ matrix.os }})
+    name: Positive - single binary (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -72,4 +72,21 @@ jobs:
         uses: ./
         with:
           binary: tests/positive/driver.sys
+          windows-version: vista-sp2
+
+  test-positive-multiple:
+    name: Positive - multiple binaries (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run action with two binaries (expect success)
+        uses: ./
+        with:
+          binary: |
+            tests/positive/driver.sys
+            tests/positive/driver.sys
           windows-version: vista-sp2
