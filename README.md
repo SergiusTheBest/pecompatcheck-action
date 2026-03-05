@@ -1,5 +1,7 @@
 # PECompatCheck Action
 
+[![Test](https://github.com/sergiusthebest/pecompatcheck-action/actions/workflows/test.yml/badge.svg)](https://github.com/sergiusthebest/pecompatcheck-action/actions/workflows/test.yml)
+
 A GitHub Action that validates Windows PE binary (DLL, EXE, SYS) compatibility against a target Windows version by resolving all imported APIs against a bundled baseline of known exports.
 
 Built on top of [PECompatCheck](tool/PECompatCheck/README.md).
@@ -92,7 +94,7 @@ jobs:
 
 ## How It Works
 
-1. Installs the required PE parser tool (`readpe` on Linux/macOS, `dumpbin` on Windows).
+1. Installs the required PE parser tool (`readpe` on Linux/macOS, uses the bundled `dumpbin.exe` on Windows).
 2. Determines the architecture of the binary (x86, x64, arm64).
 3. Resolves the architecture-specific baseline directory (e.g. `baseline/vista-sp2/x64`).
 4. Extracts all imported functions from the binary.
