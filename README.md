@@ -40,7 +40,7 @@ The action fails the step if any imported function cannot be resolved in the tar
 | Runner | Supported |
 |---|---|
 | `ubuntu-*` | ✅ |
-| `macos-*` | ✅ |
+| `macos-*` | ⚠️ Should work, untested |
 | `windows-*` | ✅ |
 
 ## Available Windows Baselines
