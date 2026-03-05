@@ -31,3 +31,18 @@ jobs:
         run: |
           echo "Expected the action to fail when the binary file is not found, but it succeeded."
           exit 1
+
+  test-positive:
+    name: Positive - driver.sys (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run action with driver.sys (expect success)
+        uses: ./
+        with:
+          binary: tests/positive/driver.sys
+          windows-version: vista-sp2
