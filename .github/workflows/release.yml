@@ -20,6 +20,8 @@ jobs:
 
       - name: Update floating tags
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           major=$(echo "${{ github.ref_name }}" | grep -oE '^v[0-9]+')
           minor=$(echo "${{ github.ref_name }}" | grep -oE '^v[0-9]+\.[0-9]+')
           git tag -fa "$major" -m "Update $major to ${{ github.ref_name }}"
