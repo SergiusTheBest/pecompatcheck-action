@@ -1,8 +1,9 @@
-name: PECompatCheck action
-description: Check PE binary compatibility against a target Windows version using PECompatCheck tool.
+name: PE Compatibility Check
+description: Check PE binary compatibility against a target Windows version using PECompatCheck tool
+author: Sergey Podobry
 
 branding:
-  icon: shield
+  icon: check-square
   color: blue
 
 inputs:
