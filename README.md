@@ -44,9 +44,12 @@ The Bash scripts use the `readpe` utility to parse PE files; the PowerShell scri
 
 Current bundled baseline data:
 
-- **Windows Vista SP2** (`6.0.6002.18005`)
+- **Windows Vista SP2** (`6.0.6002`)
   - `baseline/vista-sp2/x86`
   - `baseline/vista-sp2/x64`
+- **Windows 8.1 / Server 2012R2 Update 1** (`6.3.9600`)
+  - `baseline/8.1-update1/x86`
+  - `baseline/8.1-update1/x64`
 
 You can add additional Windows version baselines under `baseline/` using the same structure.
 
