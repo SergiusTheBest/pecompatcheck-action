@@ -47,7 +47,8 @@ The action fails the step if any imported function cannot be resolved in the tar
 
 | Value | Windows Version |
 |---|---|
-| `vista-sp2` | Windows Vista SP2 (6.0.6002.18005) — x86 and x64 |
+| `8.1-update1` | Windows 8.1 / Server 2012R2 Update 1 (6.3.9600) — x86 and x64 |
+| `vista-sp2` | Windows Vista SP2 (6.0.6002) — x86 and x64 |
 
 ## Examples
 
